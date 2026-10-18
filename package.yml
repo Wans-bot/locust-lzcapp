@@ -1,6 +1,7 @@
 name: Locust
 description: 开源性能/压力测试平台：用 Python 定义负载，实时查看吞吐、响应时间与错误
 package: cloud.lazycat.app.locust
+license: MIT
 version: 2.46.7
 author: Locust.io
 homepage: https://github.com/locustio/locust
@@ -12,37 +13,32 @@ locales:
   zh-CN:
     name: Locust 性能压测平台
     description: >-
-      开源性能/压力测试平台。用普通 Python
-      代码定义压测场景，通过网页界面实时观察吞吐量（RPS）、响应时间（中位数/p95/p99）、并发用户数与失败率，支持分布式压测与 CSV
-      导出，适合压测自建服务、API 与网站
+      开源性能/压力测试平台。用普通 Python 代码定义压测场景，通过网页界面实时观察吞吐量（RPS）、响应时间（中位数/p95/p99）、并发用户数与失败率，支持分布式压测与 CSV 导出，适合压测自建服务、API 与网站
     usage: >-
-      Locust 是业界主流的开源性能/压力测试平台（28k+ Star）。它用普通 Python
-      代码描述负载，并通过网页界面实时展示吞吐量、响应时间与错误率。本应用已由懒猫账号免密保护，打开即进入压测界面，无需在应用内再登录。
+      Locust 是业界主流的开源性能/压力测试平台（28k+ Star）。它用普通 Python 代码描述负载，并通过网页界面实时展示吞吐量、响应时间与错误率。本应用已由懒猫账号免密保护，打开即进入压测界面，无需在应用内再登录。
 
 
       【首次打开就能看到真实数据】
 
-      应用内置了一个演示 API（模拟电商接口，带随机延迟），首次启动会自动对它跑一段 3 分钟演示压测：打开界面即可在 Statistics
-      看到各接口的请求数、RPS、响应时间（中位数/p95/p99）与失败率，在 Charts 看到实时曲线。演示结束后可在同一界面开始你自己的压测。
+      应用内置了一个演示 API（模拟电商接口，带随机延迟），首次启动会自动对它跑一段 3 分钟演示压测：打开界面即可在 Statistics 看到各接口的请求数、RPS、响应时间（中位数/p95/p99）与失败率，在 Charts 看到实时曲线。演示结束后可在同一界面开始你自己的压测。
 
 
       【一、最快上手：压测你自己的服务（3 步）】
 
       1. 打开应用，在左侧 "Start new load test" 表单里填写：
+
          - Number of users（峰值并发用户数，先填 20 试水）
          - Spawn rate（每秒新增用户数，先填 5）
          - Host（目标地址，见下方「Host 怎么填」）
          - Run time（可选，如 5m；不填则手动 Stop）
       2. 点 "Start" 开始，Statistics / Charts / Failures / Exceptions 四个标签页实时刷新。
 
-      3. 点 "Stop" 结束，点 "Download Data" 导出 CSV（stats / stats_history /
-      failures）留档。
+      3. 点 "Stop" 结束，点 "Download Data" 导出 CSV（stats / stats_history / failures）留档。
 
 
       【Host 怎么填（关键）】
 
-      - 压测懒猫微服里的其他应用：填内部服务地址，格式 http://<服务名>.<包标识符>.lzcapp:<端口>。例如压测本机
-      NodeBB：http://nodebb.cloud.lazycat.app.nodebb.lzcapp:4567
+      - 压测懒猫微服里的其他应用：填内部服务地址，格式 http://<服务名>.<包标识符>.lzcapp:<端口>。例如压测本机 NodeBB：http://nodebb.cloud.lazycat.app.nodebb.lzcapp:4567
 
       - 压测公网网站/API：直接填 https://example.com（注意只压测你自己拥有或被授权的服务）。
 
@@ -52,6 +48,7 @@ locales:
       【二、进阶：用 Python 自定义压测场景（推荐）】
 
       默认脚本位于 /lzcapp/pkg/content/locustfile.py（示例见下），核心写法：
+
         from locust import HttpUser, task, between
         class ApiUser(HttpUser):
             wait_time = between(1, 3)          # 两次请求之间的思考时间
@@ -63,8 +60,7 @@ locales:
                 self.client.post("/api/items", json={"name": "demo"})
       更真实的场景可加入：登录后再压测（在 on_start 里 POST 登录并保存 token）、随机参数、带 header、断言状态码、串联多接口。
 
-      自定义方式：进入容器替换 /lzcapp/pkg/content/locustfile.py（或在自己的机器上装 pip install
-      locust 写好脚本后再拷入），重启应用生效；也可只把 Host 指向自己的服务而沿用内置脚本。
+      自定义方式：进入容器替换 /lzcapp/pkg/content/locustfile.py（或在自己的机器上装 pip install locust 写好脚本后再拷入），重启应用生效；也可只把 Host 指向自己的服务而沿用内置脚本。
 
 
       【三、看懂数据】
@@ -75,21 +71,18 @@ locales:
 
       - Failures：失败请求数与失败率，任何非 2xx/3xx 都会计入，失败率高说明服务已过载。
 
-      - Charts 页可叠加查看 Total RPS、Response Times、Number of Users，用来找「拐点」：并发升高但 RPS
-      不再涨、响应时间陡增的那个点就是当前服务的容量上限。
+      - Charts 页可叠加查看 Total RPS、Response Times、Number of Users，用来找「拐点」：并发升高但 RPS 不再涨、响应时间陡增的那个点就是当前服务的容量上限。
 
 
       【四、实用技巧】
 
       1. 先小并发（10~20）跑 1 分钟摸清基线，再成倍加压，更容易定位拐点。
 
-      2. 动态 URL 用 name= 参数归并统计，避免每个 ID 一行：self.client.get(f"/api/items/{i}",
-      name="/api/items/[id]")。
+      2. 动态 URL 用 name= 参数归并统计，避免每个 ID 一行：self.client.get(f"/api/items/{i}", name="/api/items/[id]")。
 
       3. 用标签筛选场景：@tag("read") 配合 --tags read 只跑读接口。
 
-      4. 需要更高压力时用分布式模式：Locust 支持 Master/Worker，可在同一容器内以 --processes N 启动多进程（CPU
-      多核时有效）。
+      4. 需要更高压力时用分布式模式：Locust 支持 Master/Worker，可在同一容器内以 --processes N 启动多进程（CPU 多核时有效）。
 
       5. 压测前后各跑一次同参数测试，对比 p95 与 RPS 就能量化一次改动的性能收益。
 
@@ -102,67 +95,50 @@ locales:
 
       - 需要登录吗？不需要。本应用无内置账号体系，访问由懒猫门禁保护，打开即用。
 
-      - 内置的演示 API 是什么？是容器内自带的一个本地 JSON 服务（仅监听 127.0.0.1:8090），只为演示与截图用；压测自己的服务时把
-      Host 改成你的地址即可，它不参与你的测试。
+      - 内置的演示 API 是什么？是容器内自带的一个本地 JSON 服务（仅监听 127.0.0.1:8090），只为演示与截图用；压测自己的服务时把 Host 改成你的地址即可，它不参与你的测试。
 
       - 数据会持久化吗？压测统计保存在内存中，应用重启后清空；需要留档请在界面点 Download Data 导出 CSV。
 
-      - 会不会把盒子压垮？压测产生的负载主要打向目标服务，Locust 自身开销很低；建议先用小并发，观察 Charts 里的 RPS
-      与响应时间再逐步加压。
+      - 会不会把盒子压垮？压测产生的负载主要打向目标服务，Locust 自身开销很低；建议先用小并发，观察 Charts 里的 RPS 与响应时间再逐步加压。
   en:
     name: Locust Load Testing
     description: >-
-      Open-source performance/load testing platform. Define load scenarios in
-      plain Python, watch throughput (RPS), response times (median/p95/p99),
-      concurrent users and failures live in the web UI. Distributed testing and
-      CSV export included
+      Open-source performance/load testing platform. Define load scenarios in plain Python, watch throughput (RPS), response times (median/p95/p99), concurrent users and failures live in the web UI. Distributed testing and CSV export included
     usage: >-
-      Locust is the leading open-source performance/load testing platform (28k+
-      stars). You describe load in plain Python and watch throughput, response
-      times and errors live in a web UI. This app is protected by LazyCat single
-      sign-on - open it and you land straight on the Locust UI, no separate
-      in-app login.
+      Locust is the leading open-source performance/load testing platform (28k+ stars). You describe load in plain Python and watch throughput, response times and errors live in a web UI. This app is protected by LazyCat single sign-on - open it and you land straight on the Locust UI, no separate in-app login.
 
 
       [Real data on first open]
 
-      The app ships with a built-in demo API (a mock shop API with random
-      latency) and runs a 3-minute demo load test against it on first boot: open
-      the UI and the Statistics tab already shows requests, RPS, response times
-      (median/p95/p99) and failure rates, with live curves on the Charts tab.
-      Stop it any time and start your own test in the same UI.
+      The app ships with a built-in demo API (a mock shop API with random latency) and runs a 3-minute demo load test against it on first boot: open the UI and the Statistics tab already shows requests, RPS, response times (median/p95/p99) and failure rates, with live curves on the Charts tab. Stop it any time and start your own test in the same UI.
 
 
       [1. Quick start: load test your own service (3 steps)]
 
       1. In "Start new load test" fill in:
+
          - Number of users (peak concurrent users - start with 20)
          - Spawn rate (new users per second - start with 5)
          - Host (target URL, see "What to put in Host" below)
          - Run time (optional, e.g. 5m; leave empty to stop manually)
-      2. Click "Start". Statistics / Charts / Failures / Exceptions refresh in
-      real time.
+      2. Click "Start". Statistics / Charts / Failures / Exceptions refresh in real time.
 
-      3. Click "Stop", then "Download Data" to export CSV (stats / stats_history
-      / failures).
+      3. Click "Stop", then "Download Data" to export CSV (stats / stats_history / failures).
 
 
       [What to put in Host]
 
-      - Other LazyCat apps on the same box: use the internal service address
-      http://<service>.<package-id>.lzcapp:<port>, e.g.
-      http://nodebb.cloud.lazycat.app.nodebb.lzcapp:4567
+      - Other LazyCat apps on the same box: use the internal service address http://<service>.<package-id>.lzcapp:<port>, e.g. http://nodebb.cloud.lazycat.app.nodebb.lzcapp:4567
 
-      - Public websites/APIs: https://example.com (only test services you own or
-      are authorised to test).
+      - Public websites/APIs: https://example.com (only test services you own or are authorised to test).
 
-      - LAN devices: http://<device-ip>:<port> (must be reachable from this
-      app).
+      - LAN devices: http://<device-ip>:<port> (must be reachable from this app).
 
 
       [2. Advanced: custom scenarios in Python]
 
       The default script lives at /lzcapp/pkg/content/locustfile.py:
+
         from locust import HttpUser, task, between
         class ApiUser(HttpUser):
             wait_time = between(1, 3)          # think time between requests
@@ -172,70 +148,45 @@ locales:
             @task(1)
             def create_item(self):
                 self.client.post("/api/items", json={"name": "demo"})
-      Realistic scenarios can log in first (POST credentials in on_start and
-      keep the token), randomise parameters, send headers, assert status codes
-      and chain multiple endpoints.
+      Realistic scenarios can log in first (POST credentials in on_start and keep the token), randomise parameters, send headers, assert status codes and chain multiple endpoints.
 
-      To customise: replace /lzcapp/pkg/content/locustfile.py inside the
-      container (or write it locally with pip install locust and copy it in) and
-      restart the app. You can also keep the bundled script and just point Host
-      at your service.
+      To customise: replace /lzcapp/pkg/content/locustfile.py inside the container (or write it locally with pip install locust and copy it in) and restart the app. You can also keep the bundled script and just point Host at your service.
 
 
       [3. Reading the numbers]
 
       - Req/s (RPS): completed requests per second - your throughput.
 
-      - Median / p95 / p99 (ms): half / 95% / 99% of requests finish within that
-      time; p95 and p99 reflect real user experience.
+      - Median / p95 / p99 (ms): half / 95% / 99% of requests finish within that time; p95 and p99 reflect real user experience.
 
-      - Failures: count and rate of failed requests - any non-2xx/3xx counts; a
-      rising failure rate means the service is saturated.
+      - Failures: count and rate of failed requests - any non-2xx/3xx counts; a rising failure rate means the service is saturated.
 
-      - The Charts tab overlays Total RPS, Response Times and Number of Users to
-      find the "knee": where RPS stops growing while latency spikes, that is
-      your current capacity limit.
+      - The Charts tab overlays Total RPS, Response Times and Number of Users to find the "knee": where RPS stops growing while latency spikes, that is your current capacity limit.
 
 
       [4. Practical tips]
 
-      1. Run 10-20 users for a minute to establish a baseline, then multiply the
-      load - the knee is easier to spot.
+      1. Run 10-20 users for a minute to establish a baseline, then multiply the load - the knee is easier to spot.
 
-      2. Group dynamic URLs with the name= argument:
-      self.client.get(f"/api/items/{i}", name="/api/items/[id]").
+      2. Group dynamic URLs with the name= argument: self.client.get(f"/api/items/{i}", name="/api/items/[id]").
 
-      3. Tag scenarios (@tag("read")) and run only some of them with --tags
-      read.
+      3. Tag scenarios (@tag("read")) and run only some of them with --tags read.
 
-      4. For more pressure use distributed mode: Locust supports Master/Worker,
-      or start multiple processes inside this container with --processes N
-      (helps on multi-core CPUs).
+      4. For more pressure use distributed mode: Locust supports Master/Worker, or start multiple processes inside this container with --processes N (helps on multi-core CPUs).
 
-      5. Run the same test before and after a change to quantify the performance
-      delta via p95 and RPS.
+      5. Run the same test before and after a change to quantify the performance delta via p95 and RPS.
 
-      6. Always set a Run time (e.g. 10m) for long tests so they stop by
-      themselves.
+      6. Always set a Run time (e.g. 10m) for long tests so they stop by themselves.
 
 
       [5. FAQ]
 
-      - The UI is in English: the official Locust UI is English-only
-      (widely-adopted high-quality OSS project, covered by the store exemption).
-      It is a handful of inputs plus stats tables, all explained above.
+      - The UI is in English: the official Locust UI is English-only (widely-adopted high-quality OSS project, covered by the store exemption). It is a handful of inputs plus stats tables, all explained above.
 
-      - Do I need to log in? No. This app has no built-in accounts; access is
-      protected by the LazyCat gateway.
+      - Do I need to log in? No. This app has no built-in accounts; access is protected by the LazyCat gateway.
 
-      - What is the built-in demo API? A local JSON service bundled in the
-      container (bound to 127.0.0.1:8090) used only for the out-of-the-box demo
-      and screenshots. Point Host at your own service to test it - the demo
-      target is not involved.
+      - What is the built-in demo API? A local JSON service bundled in the container (bound to 127.0.0.1:8090) used only for the out-of-the-box demo and screenshots. Point Host at your own service to test it - the demo target is not involved.
 
-      - Is data persisted? Statistics live in memory and reset when the app
-      restarts; export CSV from the UI to keep results.
+      - Is data persisted? Statistics live in memory and reset when the app restarts; export CSV from the UI to keep results.
 
-      - Will this overload my box? The generated load targets the service you
-      choose, while Locust itself is very light. Start with a small number of
-      users and watch RPS/latency in Charts before scaling up.
+      - Will this overload my box? The generated load targets the service you choose, while Locust itself is very light. Start with a small number of users and watch RPS/latency in Charts before scaling up.
