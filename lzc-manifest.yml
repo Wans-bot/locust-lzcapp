@@ -11,6 +11,7 @@ application:
     start_period: 120s
 services:
   locust:
-    image: registry.lazycat.cloud/wans/locustio/locust:e892abceac25f5d2
+    # upstream: docker.io/locustio/locust:2.46.7
+    image: registry.lazycat.cloud/wans/locustio/locust:f5c3b69bf98e0fb8
     entrypoint: /bin/sh
     command: /lzcapp/pkg/content/entrypoint.sh
