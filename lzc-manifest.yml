@@ -1,0 +1,16 @@
+application:
+  subdomain: locust
+  public_path:
+    - /
+  upstreams:
+    - location: /
+      backend: http://locust.cloud.lazycat.app.locust.lzcapp:8089
+      fix_websocket_header: true
+  health_check:
+    test_url: http://locust.cloud.lazycat.app.locust.lzcapp:8089/
+    start_period: 120s
+services:
+  locust:
+    image: registry.lazycat.cloud/wans/locustio/locust:e892abceac25f5d2
+    entrypoint: /bin/sh
+    command: /lzcapp/pkg/content/entrypoint.sh
