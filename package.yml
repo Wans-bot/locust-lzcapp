@@ -2,7 +2,7 @@ name: Locust
 description: 开源性能/压力测试平台：用 Python 定义负载，实时查看吞吐、响应时间与错误
 package: cloud.lazycat.app.locust
 license: MIT
-version: 2.46.7
+version: 2.47.0
 author: Locust.io
 homepage: https://github.com/locustio/locust
 licenses:
@@ -27,6 +27,7 @@ locales:
 
       1. 打开应用，在左侧 "Start new load test" 表单里填写：
 
+
          - Number of users（峰值并发用户数，先填 20 试水）
          - Spawn rate（每秒新增用户数，先填 5）
          - Host（目标地址，见下方「Host 怎么填」）
@@ -48,6 +49,7 @@ locales:
       【二、进阶：用 Python 自定义压测场景（推荐）】
 
       默认脚本位于 /lzcapp/pkg/content/locustfile.py（示例见下），核心写法：
+
 
         from locust import HttpUser, task, between
         class ApiUser(HttpUser):
@@ -117,6 +119,7 @@ locales:
 
       1. In "Start new load test" fill in:
 
+
          - Number of users (peak concurrent users - start with 20)
          - Spawn rate (new users per second - start with 5)
          - Host (target URL, see "What to put in Host" below)
@@ -138,6 +141,7 @@ locales:
       [2. Advanced: custom scenarios in Python]
 
       The default script lives at /lzcapp/pkg/content/locustfile.py:
+
 
         from locust import HttpUser, task, between
         class ApiUser(HttpUser):
